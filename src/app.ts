@@ -16,9 +16,14 @@ class App {
   public constructor () {
     dotenv.config()
     this.express = express()
+    this.config()
     this.middlewares()
     this.database()
     this.routes()
+  }
+
+  private config () {
+    this.express.set('view engine', 'ejs')
   }
 
   private middlewares () {
