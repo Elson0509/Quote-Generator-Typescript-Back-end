@@ -1,28 +1,30 @@
-// import * as dotenv from 'dotenv'
-// import hbs from 'nodemailer-express-handlebars'
-// import nodemailer from 'nodemailer'
-// import path from 'path'
+import * as dotenv from 'dotenv'
+import nodemailer from 'nodemailer'
+import Email from 'email-templates'
 
-// const transport = nodemailer.createTransport({
-//   host: process.env.MAIL_HOST,
-//   port: process.env.MAIL_PORT,
-//   auth: {
-//     user: process.env.MAIL_USER,
-//     pass: process.env.MAIL_PASS
-//   },
-// })
+dotenv.config()
 
-// transport.use(
-//   'compile',
-//   hbs({
-//     viewEngine: {
-//       extName: '.html',
-//       partialsDir: path.resolve('./src/views/mail'),
-//       defaultLayout: false,
-//     },
-//     viewPath: path.resolve('./src/views/mail'),
-//     extName: '.html',
-//   })
-// )
+const transport = nodemailer.createTransport({
+  host: process.env.MAIL_HOST,
+  port: Number(process.env.MAIL_PORT),
+  auth: {
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASS
+  }
+})
 
-// export default transport
+const email = new Email({
+  transport,
+  send: true,
+  preview: false,
+  views: {
+    options: {
+      extension: 'ejs'
+    }
+  },
+  message: {
+    from: 'suport@greatquotes.com'
+  }
+})
+
+export default email

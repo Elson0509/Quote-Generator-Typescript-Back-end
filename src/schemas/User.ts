@@ -3,20 +3,20 @@ import { Schema, model, Document } from 'mongoose'
 interface UserInterface extends Document {
   _id?: string
   email?: string
-  userName?: string
+  username?: string
   password?: string
   resetPass?: string
-  activatePass?: string
+  activationtoken?: string
 }
 
 const UserSchema = new Schema(
   {
     _id: String,
     email: String,
-    userName: String,
+    username: String,
     password: String,
     resetPass: String,
-    activatePass: String
+    activationtoken: String
   },
   {
     timestamps: true

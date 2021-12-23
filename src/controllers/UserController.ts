@@ -5,6 +5,8 @@ import User from '../schemas/User'
 // import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 import crypto from 'crypto'
+import mailer from '../config/mailer'
+import path from 'path'
 
 class UserController {
   public async index (req: Request, res: Response): Promise<Response> {
@@ -27,7 +29,6 @@ class UserController {
 
       // check if username already stored
       const existedUsername = await User.findOne({ username: username })
-      console.log(existedUsername)
       if (existedUsername) {
         return res.status(400).send({
           message: 'Username already in use.'
@@ -38,12 +39,13 @@ class UserController {
       const activationtoken = crypto.randomBytes(20).toString('hex')
 
       // hashing password
-      let hashedPassword : string
+      let hashedPassword: string
       try {
         hashedPassword = await bcrypt.hash(password, 12)
       } catch (err) {
         return res.status(500).send({
-          message: 'There was a problem when creating the user. please try again.'
+          message:
+            'There was a problem when creating the user. please try again.'
         })
       }
 
@@ -56,7 +58,15 @@ class UserController {
         activationtoken
       })
 
-      // TODO send email
+      // sending welcome email
+      mailer.send({
+        template: path.resolve('./src/views/mail/auth/welcomeuser'),
+        message: {
+          to: email
+        },
+        locals: { token: activationtoken, name: username }
+      })
+        .catch(err => console.log(err))
 
       return res.json(user)
     } catch (err) {
