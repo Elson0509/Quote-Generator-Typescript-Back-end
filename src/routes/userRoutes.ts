@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import UserController from './controllers/UserController'
+import UserController from '../controllers/UserController'
 
 const routes = Router()
 
@@ -7,6 +7,8 @@ routes.get('/users', UserController.index)
 routes.get('/users/:id', UserController.find)
 routes.post('/users', UserController.store)
 routes.post('/users/login', UserController.login)
+routes.post('/users/forgotpass', UserController.forgotPass)
+routes.post('/users/resetpass', UserController.resetPass)
 routes.delete('/users/:id', UserController.delete)
 routes.get('/users/activate/:token', UserController.activate)
 

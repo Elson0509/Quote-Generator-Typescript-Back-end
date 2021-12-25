@@ -5,7 +5,7 @@ interface UserInterface extends Document {
   email?: string
   username?: string
   password?: string
-  resetPass?: string
+  resetToken?: string
   activationtoken?: string
   activated: boolean
 }
@@ -16,7 +16,7 @@ const UserSchema = new Schema(
     email: String,
     username: String,
     password: String,
-    resetPass: String,
+    resetToken: String,
     activationtoken: String,
     activated: Boolean
   },
