@@ -12,6 +12,7 @@ import mongoose from 'mongoose'
 import authorRoutes from './routes/authorRoutes'
 import genreRoutes from './routes/genreRoutes'
 import userRoutes from './routes/userRoutes'
+import quoteRoutes from './routes/quoteRoutes'
 
 class App {
   public express: express.Application;
@@ -47,6 +48,7 @@ class App {
   private routes () {
     this.express.use(authorRoutes)
     this.express.use(genreRoutes)
+    this.express.use(quoteRoutes)
     this.express.use(userRoutes)
   }
 }

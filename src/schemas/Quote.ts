@@ -16,7 +16,7 @@ interface genre {
   genre: string
 }
 
-interface userProposed {
+interface userProposing {
   _id: string,
   name: string
 }
@@ -32,7 +32,7 @@ interface QuoteInterface extends Document {
   author?: author
   comments?: comment[]
   genre?: genre
-  userProposed?: userProposed
+  userProposing?: userProposing
   stars?: star[]
 }
 
@@ -43,7 +43,7 @@ const QuoteSchema = new Schema(
     author: { _id: String, name: String },
     comments: [{ _id: String, userId: String, comment: String }],
     genre: { _id: String, genre: String },
-    userProposed: { _id: String, name: String },
+    userProposing: { _id: String, name: String },
     stars: [{ _idUser: String, grade: Number }]
   },
   {
