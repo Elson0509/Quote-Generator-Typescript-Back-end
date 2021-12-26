@@ -8,6 +8,9 @@ import normalize from './middlewares/normalize'
 import postTrimmer from './middlewares/postTrimmer'
 import helmet from 'helmet'
 import mongoose from 'mongoose'
+// importing routes
+import authorRoutes from './routes/authorRoutes'
+import genreRoutes from './routes/genreRoutes'
 import userRoutes from './routes/userRoutes'
 
 class App {
@@ -42,6 +45,8 @@ class App {
   }
 
   private routes () {
+    this.express.use(authorRoutes)
+    this.express.use(genreRoutes)
     this.express.use(userRoutes)
   }
 }

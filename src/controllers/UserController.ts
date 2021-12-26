@@ -11,12 +11,12 @@ import path from 'path'
 dotenv.config()
 
 class UserController {
-  public async index(req: Request, res: Response): Promise<Response> {
+  public async index (req: Request, res: Response): Promise<Response> {
     const users = await User.find()
     return res.json(users)
   }
 
-  public async store(req: Request, res: Response): Promise<Response> {
+  public async store (req: Request, res: Response): Promise<Response> {
     const { email, username, password } = req.body
 
     try {
@@ -24,7 +24,7 @@ class UserController {
       const existedEmail = await User.findOne({ email })
       if (existedEmail) {
         return res.status(400).send({
-          message: 'Email already in use.',
+          message: 'Email already in use.'
         })
       }
 
@@ -32,7 +32,7 @@ class UserController {
       const existedUsername = await User.findOne({ username: username })
       if (existedUsername) {
         return res.status(400).send({
-          message: 'Username already in use.',
+          message: 'Username already in use.'
         })
       }
 
@@ -46,7 +46,7 @@ class UserController {
       } catch (err) {
         return res.status(500).send({
           message:
-            'There was a problem when creating the user. please try again.',
+            'There was a problem when creating the user. please try again.'
         })
       }
 
@@ -57,7 +57,7 @@ class UserController {
         username,
         password: hashedPassword,
         activationtoken,
-        activated: false,
+        activated: false
       })
 
       // sending welcome email
@@ -65,36 +65,36 @@ class UserController {
         .send({
           template: path.resolve('./src/views/mail/auth/welcomeuser'),
           message: {
-            to: email,
+            to: email
           },
-          locals: { token: activationtoken, name: username },
+          locals: { token: activationtoken, name: username }
         })
         .catch((err) => {
           console.log(err)
           return res.status(400).send({
-            message: 'There was an error sending welcome email. Try again.',
+            message: 'There was an error sending welcome email. Try again.'
           })
         })
 
       return res.json(user)
     } catch (err) {
       return res.status(400).send({
-        message: 'There was an error. Try again.',
+        message: 'There was an error. Try again.'
       })
     }
   }
 
-  public async find(req: Request, res: Response): Promise<Response> {
+  public async find (req: Request, res: Response): Promise<Response> {
     const user = await User.findById(req.params.id).exec()
     return res.json(user || {})
   }
 
-  public async delete(req: Request, res: Response): Promise<Response> {
+  public async delete (req: Request, res: Response): Promise<Response> {
     const response = await User.findByIdAndDelete(req.params.id).exec()
     return res.json(response)
   }
 
-  public async activate(req: Request, res: Response): Promise<Response> | void {
+  public async activate (req: Request, res: Response): Promise<void | Response<never, Record<string, any>>> {
     const { token } = req.params
     // check if email already stored
     try {
@@ -126,19 +126,19 @@ class UserController {
       }
     } catch (err) {
       return res.status(400).send({
-        message: 'There was an error. Try again.',
+        message: 'There was an error. Try again.'
       })
     }
   }
 
-  public async login(req: Request, res: Response): Promise<Response> {
+  public async login (req: Request, res: Response): Promise<Response> {
     const { email, password } = req.body
     let userFound
     try {
       userFound = await User.findOne({ email, activated: true })
     } catch (err) {
       return res.status(500).send({
-        message: 'There is a problem in the database. Try again',
+        message: 'There is a problem in the database. Try again'
       })
     }
     if (userFound) {
@@ -149,7 +149,7 @@ class UserController {
         isValidPassword = await bcrypt.compare(password, userFound.password)
       } catch (error) {
         return res.status(500).send({
-          message: 'Login error. Please verify your credencials',
+          message: 'Login error. Please verify your credencials'
         })
       }
       if (isValidPassword) {
@@ -161,22 +161,22 @@ class UserController {
           )
         } catch (error) {
           return res.status(500).send({
-            message: 'There is an error when trying to log in. Try again',
+            message: 'There is an error when trying to log in. Try again'
           })
         }
         res.send({
           userId: userFound._id,
           username: userFound.username,
-          token,
+          token
         })
       } else {
         return res.status(400).send({
-          message: 'Login error. Please verify your credencials',
+          message: 'Login error. Please verify your credencials'
         })
       }
     } else {
       return res.status(404).send({
-        message: 'User not found',
+        message: 'User not found'
       })
     }
   }
@@ -188,13 +188,13 @@ class UserController {
       userFound = await User.findOne({ email, activated: true })
     } catch (err) {
       return res.status(500).send({
-        message: 'There is a problem in the database. Try again.',
+        message: 'There is a problem in the database. Try again.'
       })
     }
 
     if (!userFound) {
       return res.status(400).send({
-        message: 'User not found.',
+        message: 'User not found.'
       })
     }
 
