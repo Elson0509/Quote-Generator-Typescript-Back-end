@@ -8,6 +8,7 @@ interface author {
 interface comment {
   _id: string,
   userId: string,
+  username: string
   comment: string
 }
 
@@ -41,7 +42,7 @@ const QuoteSchema = new Schema(
     _id: String,
     quote: String,
     author: { _id: String, name: String },
-    comments: [{ _id: String, userId: String, comment: String }],
+    comments: [{ _id: String, userId: String, username: String, comment: String }],
     genre: { _id: String, genre: String },
     userProposing: { _id: String, name: String },
     stars: [{ _idUser: String, grade: Number }]

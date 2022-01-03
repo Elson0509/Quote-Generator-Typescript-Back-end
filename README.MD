@@ -1,84 +1,24 @@
 ## Purpose
-Basic set up for Node.js projects using Typescript, Express and Mangoose.
+The back end of a website about quotes, using Typescript and MongoDB.
 
-To run:
-```
-npm run dev
-```
+1. Contains login administration: 
+    - Stores users in database
+    - Hash of password
+    - Login
+    - Signup
+    - JWT authentication
+    - Forgot password
+    - Reset password
+    - Send Welcome, Forgot and Reset email
 
-## Initital steps to set up a new Typescript project:
+2. There are the following entities:
+    - Author: author of the quote
+    - Genre: Genre of the quote (Love, Investment, Science, etc)
+    - Quote: the inspirational phrase
+    - User: the user of the system
 
-1. Create package.json
-```
-npm init
-```
+3. List of custom middlewares
+    - check-auth: authenticate the user
+    - normalize: normalize email
+    - postTrimmer: trim all string data from post requests.
 
-2.  Install Typescript
-```
-npm install typescript --save-dev
-```
-
-3. Install Sucrase (Typescript transpiler)
-```
-npm install sucrase --save-dev
-```
-
-4. Create a src folder
-
-5. Create a src/index.ts file
-
-6. Install nodemon
-```
-npm install nodemon --save-dev
-```
-
-7. create nodemon.json file
-```
-{
-    "watch": ["src"],
-    "ext": "ts",
-    "execMap":{
-        "ts":"sucrase-node src/index.ts"
-    }
-}
-```
-
-8. Add dev and build script in package.json
-```
-"dev": "nodemon src/index.ts",
-"build": "sucrase ./src -d ./dist --transforms typescript,imports"
-```
-
-9. Instal eslint
-```
-npm install eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin --save-dev
-```
-
-10. Configure es-lint
-```
-npx eslint --init
-```
-How would you like to use ESLint? · style       
-- [x] What type of modules does your project use? · esm
-- [x] Which framework does your project use? · none
-- [x] Does your project use TypeScript? · Yes
-- [x] Where does your code run? · browser
-- [x] How would you like to define a style for your project? · guide
-- [x] Which style guide do you want to follow? · standard
-- [x] What format do you want your config file to be in? · JavaScript
-- [x] Would you like to install them now with npm? · Yes
-
-11. In .eslintrc.js, add this line for extends array:
-```
-"plugin:@typescript-eslint/recommended"
-```
-
-12.  install express, cors and mongoose
-```
-npm install express cors mongoose
-```
-
-13.  install typescript
-```
-npm i --save-dev @types/express @types/cors @types/mongoose
-```
